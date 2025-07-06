@@ -1,0 +1,47 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.x3squaredcircles.core.test" >
+4
+5    <uses-sdk
+5-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:5:5-74
+6        android:minSdkVersion="24"
+6-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:5:15-41
+7        android:targetSdkVersion="24" />
+7-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:5:42-71
+8
+9    <instrumentation
+9-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:11:5-15:80
+10        android:name="android.test.InstrumentationTestRunner"
+10-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:11:22-75
+11        android:functionalTest="false"
+11-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:14:22-52
+12        android:handleProfiling="false"
+12-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:13:22-53
+13        android:label="Tests for com.x3squaredcircles.core.test"
+13-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:15:22-78
+14        android:targetPackage="com.x3squaredcircles.core.test" />
+14-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:12:22-76
+15
+16    <permission
+16-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+17        android:name="com.x3squaredcircles.core.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.x3squaredcircles.core.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:7:5-9:19
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.12.0] C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+24        android:debuggable="true"
+25        android:extractNativeLibs="false" >
+26        <uses-library android:name="android.test.runner" />
+26-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:8:9-60
+26-->C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest6025604013064523951.xml:8:23-57
+27    </application>
+28
+29</manifest>

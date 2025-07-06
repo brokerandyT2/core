@@ -1,0 +1,13 @@
+com.x3squaredcircles.core-lifecycle-runtime-2.3.1-0 C:\Users\broke\.gradle\caches\8.9\transforms\93f315569fd4dbd736691831ad9f8343\transformed\lifecycle-runtime-2.3.1\res
+com.x3squaredcircles.core-annotation-experimental-1.3.0-1 C:\Users\broke\.gradle\caches\8.9\transforms\9ed822e11a3a6c7419cd10360f894662\transformed\annotation-experimental-1.3.0\res
+com.x3squaredcircles.core-core-ktx-1.12.0-2 C:\Users\broke\.gradle\caches\8.9\transforms\c8570cb2e10a564e466c9ae83a475fef\transformed\core-ktx-1.12.0\res
+com.x3squaredcircles.core-core-1.12.0-3 C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\res
+com.x3squaredcircles.core-pngs-4 C:\Users\broke\AndroidStudioProjects\core\core\build\generated\res\pngs\release
+com.x3squaredcircles.core-resValues-5 C:\Users\broke\AndroidStudioProjects\core\core\build\generated\res\resValues\release
+com.x3squaredcircles.core-mergeReleaseResources-6 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.x3squaredcircles.core-mergeReleaseResources-7 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.x3squaredcircles.core-release-8 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\merged_res\release\mergeReleaseResources
+com.x3squaredcircles.core-androidMain-9 C:\Users\broke\AndroidStudioProjects\core\core\src\androidMain\res
+com.x3squaredcircles.core-androidRelease-10 C:\Users\broke\AndroidStudioProjects\core\core\src\androidRelease\res
+com.x3squaredcircles.core-main-11 C:\Users\broke\AndroidStudioProjects\core\core\src\main\res
+com.x3squaredcircles.core-release-12 C:\Users\broke\AndroidStudioProjects\core\core\src\release\res

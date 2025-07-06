@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.x3squaredcircles.core-release-7:/drawable-v21/notification_action_background.xml",
+        "source": "com.x3squaredcircles.core-core-1.12.0-3:/drawable-v21/notification_action_background.xml"
+    }
+]

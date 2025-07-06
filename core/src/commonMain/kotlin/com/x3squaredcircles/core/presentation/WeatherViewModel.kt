@@ -1,4 +1,3 @@
-Now I need to update the WeatherViewModel to fix the remaining compilation errors:
 // core\src\commonMain\kotlin\com\x3squaredcircles\core\presentation\WeatherViewModel.kt
 package com.x3squaredcircles.core.presentation
 import com.x3squaredcircles.core.Result
@@ -8,13 +7,9 @@ import com.x3squaredcircles.core.queries.GetWeatherForecastQuery
 import com.x3squaredcircles.core.dtos.WeatherForecastDto
 import com.x3squaredcircles.core.dtos.WeatherDataDto
 import com.x3squaredcircles.core.dtos.DailyForecastDto
-import com.x3squaredcircles.core.presentation.IErrorDisplayService
-import com.x3squaredcircles.core.presentation.INavigationAware
-import com.x3squaredcircles.core.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.min
@@ -164,6 +159,7 @@ private fun isSameDay(timestamp1: Long, timestamp2: Long): Boolean {
 }
 
 private fun formatDayName(timestamp: Long): String {
+    //TODO: Implement actual time formatting logic
     return "Day" 
 }
 

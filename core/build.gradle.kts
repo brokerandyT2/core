@@ -4,6 +4,7 @@ plugins {
 }
 
 kotlin {
+    // Explicitly register the Android target
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -11,35 +12,50 @@ kotlin {
             }
         }
     }
-    
-    jvm()
-    
+
+    // JVM target for desktop/server code
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-                // This is the critical missing piece:
-                implementation(kotlin("stdlib-common"))
             }
         }
+
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
             }
         }
+
         val androidMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-jdk8"))
+                implementation("androidx.core:core-ktx:1.12.0")
             }
         }
-        val jvmMain by getting {
+
+        val androidUnitTest by getting {
             dependencies {
-                implementation(kotlin("stdlib-jdk8"))
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.2")
             }
         }
-        val jvmTest by getting {
+
+        val desktopMain by getting {
+            dependencies {
+                // Desktop specific dependencies if needed
+            }
+        }
+
+        val desktopTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
             }
@@ -54,7 +70,7 @@ android {
     defaultConfig {
         minSdk = 24
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
