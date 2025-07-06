@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version "1.9.20" // Add version number
 }
 
 kotlin {
@@ -26,6 +27,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Add this line
+                implementation("io.ktor:ktor-client-core:2.3.5")
+                implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
             }
         }
 
@@ -38,7 +43,11 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("androidx.core:core-ktx:1.12.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0") // Add this line
+                implementation("io.ktor:ktor-client-core:2.3.5")
+                implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
             }
         }
 
@@ -63,6 +72,7 @@ kotlin {
     }
 }
 
+// Android configuration
 android {
     namespace = "com.x3squaredcircles.core"
     compileSdk = 34
