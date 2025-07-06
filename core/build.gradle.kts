@@ -18,21 +18,30 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                // This is the critical missing piece:
+                implementation(kotlin("stdlib-common"))
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
             dependencies {
-                // Android-specific dependencies
+                implementation(kotlin("stdlib-jdk8"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                // JVM-specific dependencies
+                implementation(kotlin("stdlib-jdk8"))
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
             }
         }
     }
