@@ -3,6 +3,9 @@ package com.x3squaredcircles.core.infrastructure.external.models
 
 
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 @Serializable
 data class OpenWeatherResponse(
     @SerialName("lat")
