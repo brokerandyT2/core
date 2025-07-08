@@ -32,6 +32,13 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:2.3.5")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
+
+                // Core Koin - version 3.5.0 (stable)
+                implementation("io.insert-koin:koin-core:3.5.0")
+
+                // Koin Compose - version 1.1.0 (different versioning!)
+                implementation("io.insert-koin:koin-compose:1.1.0")
+
             }
         }
 
@@ -49,6 +56,11 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:2.3.5")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
+                // Android-specific Koin - version 3.5.0
+                implementation("io.insert-koin:koin-android:3.5.0")
+
+                // Android Compose Koin - version 3.5.0
+                implementation("io.insert-koin:koin-androidx-compose:3.5.0")
             }
         }
 
