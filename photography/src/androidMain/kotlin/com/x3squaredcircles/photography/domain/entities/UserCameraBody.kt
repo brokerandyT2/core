@@ -1,5 +1,5 @@
 // core/src/commonMain/kotlin/com/x3squaredcircles/core/domain/entities/UserCameraBody.kt
-package com.x3squaredcircles.core.domain.entities
+package com.x3squaredcircles.photography.domain.entities
 
 import com.x3squaredcircles.core.domain.common.Entity
 
