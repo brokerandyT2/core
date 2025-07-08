@@ -8,7 +8,8 @@ import com.x3squaredcircles.core.mediator.IMediator
 
 class DeleteLocationCommandHandler(
     private val locationRepository: ILocationRepository,
-    private val mediator: IMediator
+    private val mediator: IMediator,
+    private val unitOfWork: IUnitOfWork
 ) : ICommandHandler<DeleteLocationCommand, Result<Boolean>> {
 
     override suspend fun handle(request: DeleteLocationCommand): Result<Boolean> {

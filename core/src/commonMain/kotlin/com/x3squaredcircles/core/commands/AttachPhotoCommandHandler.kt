@@ -9,7 +9,8 @@ import com.x3squaredcircles.core.mediator.IMediator
 
 class AttachPhotoCommandHandler(
     private val locationRepository: ILocationRepository,
-    private val mediator: IMediator
+    private val mediator: IMediator,
+    private val unitOfWork: IUnitOfWork
 ) : ICommandHandler<AttachPhotoCommand, Result<LocationDto>> {
 
     override suspend fun handle(request: AttachPhotoCommand): Result<LocationDto> {

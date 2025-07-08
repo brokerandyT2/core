@@ -12,7 +12,8 @@ import com.x3squaredcircles.core.mediator.IMediator
 
 class SaveLocationCommandHandler(
         private val locationRepository: ILocationRepository,
-        private val mediator: IMediator
+        private val mediator: IMediator,
+        private val unitOfWork: IUnitOfWork
 ) : ICommandHandler<SaveLocationCommand, Result<LocationDto>> {
     override suspend fun handle(request: SaveLocationCommand): Result<LocationDto> {
         return try {
