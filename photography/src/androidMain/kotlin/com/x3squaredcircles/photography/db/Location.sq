@@ -1,0 +1,51 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/Location.sq
+
+CREATE TABLE Location (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL DEFAULT '',
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    address TEXT DEFAULT '',
+    photoPath TEXT DEFAULT '',
+    isDeleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+    timestamp INTEGER NOT NULL
+);
+
+-- Indexes for performance
+CREATE INDEX idx_location_timestamp ON Location(timestamp);
+CREATE INDEX idx_location_deleted ON Location(isDeleted);
+CREATE INDEX idx_location_coordinates ON Location(latitude, longitude);
+
+-- Queries
+insertLocation:
+INSERT INTO Location(title, description, latitude, longitude, address, photoPath, isDeleted, timestamp)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+selectLocationById:
+SELECT * FROM Location WHERE id = ?;
+
+selectAllLocations:
+SELECT * FROM Location WHERE isDeleted = 0 ORDER BY timestamp DESC;
+
+selectRecentLocations:
+SELECT * FROM Location WHERE isDeleted = 0 ORDER BY timestamp DESC LIMIT ?;
+
+updateLocation:
+UPDATE Location 
+SET title = ?, description = ?, latitude = ?, longitude = ?, address = ?, photoPath = ?
+WHERE id = ?;
+
+deleteLocation:
+UPDATE Location SET isDeleted = 1 WHERE id = ?;
+
+selectLocationsByDistance:
+SELECT *, 
+    (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance
+FROM Location 
+WHERE isDeleted = 0
+HAVING distance < ?
+ORDER BY distance;
+
+selectLocationCount:
+SELECT COUNT(*) FROM Location WHERE isDeleted = 0;

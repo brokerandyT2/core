@@ -1,0 +1,55 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/CameraBody.sq
+
+CREATE TABLE CameraBody (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    sensorType TEXT NOT NULL,
+    sensorWidth REAL NOT NULL,
+    sensorHeight REAL NOT NULL,
+    mountType INTEGER NOT NULL,
+    isUserCreated INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dateAdded INTEGER NOT NULL
+);
+
+-- Indexes for performance
+CREATE INDEX idx_camerabody_name ON CameraBody(name);
+CREATE INDEX idx_camerabody_mounttype ON CameraBody(mountType);
+CREATE INDEX idx_camerabody_usercreated ON CameraBody(isUserCreated);
+CREATE INDEX idx_camerabody_dateadded ON CameraBody(dateAdded);
+
+-- Queries
+insertCameraBody:
+INSERT INTO CameraBody(name, sensorType, sensorWidth, sensorHeight, mountType, isUserCreated, dateAdded)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectCameraBodyById:
+SELECT * FROM CameraBody WHERE id = ?;
+
+selectAllCameraBodies:
+SELECT * FROM CameraBody ORDER BY isUserCreated DESC, name;
+
+selectPagedCameraBodies:
+SELECT * FROM CameraBody ORDER BY isUserCreated DESC, name LIMIT ? OFFSET ?;
+
+selectUserCameraBodies:
+SELECT * FROM CameraBody WHERE isUserCreated = 1 ORDER BY name;
+
+selectCameraBodiesByMountType:
+SELECT * FROM CameraBody WHERE mountType = ? ORDER BY isUserCreated DESC, name;
+
+searchCameraBodiesByName:
+SELECT * FROM CameraBody WHERE name LIKE '%' || ? || '%' ORDER BY isUserCreated DESC, name;
+
+updateCameraBody:
+UPDATE CameraBody 
+SET name = ?, sensorType = ?, sensorWidth = ?, sensorHeight = ?, mountType = ?
+WHERE id = ?;
+
+deleteCameraBody:
+DELETE FROM CameraBody WHERE id = ?;
+
+selectCameraBodyCount:
+SELECT COUNT(*) FROM CameraBody;
+
+selectUserCameraBodyCount:
+SELECT COUNT(*) FROM CameraBody WHERE isUserCreated = 1;

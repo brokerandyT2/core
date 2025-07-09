@@ -1,0 +1,129 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/Database.sq
+
+-- Database Metadata
+PRAGMA user_version = 1;
+PRAGMA foreign_keys = ON;
+PRAGMA journal_mode = WAL;
+
+-- Database initialization queries
+createAllTables:
+CREATE TABLE IF NOT EXISTS Location (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL DEFAULT '',
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    address TEXT DEFAULT '',
+    photoPath TEXT DEFAULT '',
+    isDeleted INTEGER AS Boolean NOT NULL DEFAULT 0,
+    timestamp INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Weather (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    locationId INTEGER NOT NULL,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    timezone TEXT NOT NULL,
+    timezoneOffset INTEGER NOT NULL,
+    lastUpdate INTEGER NOT NULL,
+    FOREIGN KEY (locationId) REFERENCES Location(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS TipType (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    i8n TEXT NOT NULL DEFAULT 'en-US'
+);
+
+CREATE TABLE IF NOT EXISTS Tip (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    tipTypeId INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    fstop TEXT DEFAULT '',
+    shutterSpeed TEXT DEFAULT '',
+    iso TEXT DEFAULT '',
+    i8n TEXT NOT NULL DEFAULT 'en-US',
+    FOREIGN KEY (tipTypeId) REFERENCES TipType(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CameraBody (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    sensorType TEXT NOT NULL,
+    sensorWidth REAL NOT NULL,
+    sensorHeight REAL NOT NULL,
+    mountType INTEGER NOT NULL,
+    isUserCreated INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dateAdded INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Lens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    minMM REAL NOT NULL,
+    maxMM REAL,
+    minFStop REAL,
+    maxFStop REAL,
+    isPrime INTEGER AS Boolean NOT NULL DEFAULT 0,
+    isUserCreated INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dateAdded INTEGER NOT NULL,
+    nameForLens TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS LensCameraCompatibility (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    lensId INTEGER NOT NULL,
+    cameraBodyId INTEGER NOT NULL,
+    dateAdded INTEGER NOT NULL,
+    FOREIGN KEY (lensId) REFERENCES Lens(id) ON DELETE CASCADE,
+    FOREIGN KEY (cameraBodyId) REFERENCES CameraBody(id) ON DELETE CASCADE,
+    UNIQUE(lensId, cameraBodyId)
+);
+
+CREATE TABLE IF NOT EXISTS PhoneCameraProfile (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    phoneModel TEXT NOT NULL,
+    mainLensFocalLength REAL NOT NULL,
+    mainLensFOV REAL NOT NULL,
+    ultraWideFocalLength REAL,
+    telephotoFocalLength REAL,
+    dateCalibrated INTEGER NOT NULL,
+    isActive INTEGER AS Boolean NOT NULL DEFAULT 1
+);
+
+-- Index creation
+createAllIndexes:
+CREATE INDEX IF NOT EXISTS idx_location_timestamp ON Location(timestamp);
+CREATE INDEX IF NOT EXISTS idx_location_deleted ON Location(isDeleted);
+CREATE INDEX IF NOT EXISTS idx_location_coordinates ON Location(latitude, longitude);
+
+CREATE INDEX IF NOT EXISTS idx_weather_location ON Weather(locationId);
+CREATE INDEX IF NOT EXISTS idx_weather_coordinates ON Weather(latitude, longitude);
+CREATE INDEX IF NOT EXISTS idx_weather_lastUpdate ON Weather(lastUpdate);
+
+CREATE INDEX IF NOT EXISTS idx_tiptype_name ON TipType(name);
+CREATE INDEX IF NOT EXISTS idx_tiptype_i8n ON TipType(i8n);
+
+CREATE INDEX IF NOT EXISTS idx_tip_tiptype ON Tip(tipTypeId);
+CREATE INDEX IF NOT EXISTS idx_tip_i8n ON Tip(i8n);
+CREATE INDEX IF NOT EXISTS idx_tip_title ON Tip(title);
+
+CREATE INDEX IF NOT EXISTS idx_camerabody_name ON CameraBody(name);
+CREATE INDEX IF NOT EXISTS idx_camerabody_mounttype ON CameraBody(mountType);
+CREATE INDEX IF NOT EXISTS idx_camerabody_usercreated ON CameraBody(isUserCreated);
+CREATE INDEX IF NOT EXISTS idx_camerabody_dateadded ON CameraBody(dateAdded);
+
+CREATE INDEX IF NOT EXISTS idx_lens_focal_length ON Lens(minMM, maxMM);
+CREATE INDEX IF NOT EXISTS idx_lens_aperture ON Lens(minFStop, maxFStop);
+CREATE INDEX IF NOT EXISTS idx_lens_usercreated ON Lens(isUserCreated);
+CREATE INDEX IF NOT EXISTS idx_lens_dateadded ON Lens(dateAdded);
+CREATE INDEX IF NOT EXISTS idx_lens_isprime ON Lens(isPrime);
+
+CREATE INDEX IF NOT EXISTS idx_compatibility_lens ON LensCameraCompatibility(lensId);
+CREATE INDEX IF NOT EXISTS idx_compatibility_camera ON LensCameraCompatibility(cameraBodyId);
+CREATE INDEX IF NOT EXISTS idx_compatibility_dateadded ON LensCameraCompatibility(dateAdded);
+
+CREATE INDEX IF NOT EXISTS idx_phonecameraprofile_model ON PhoneCameraProfile(phoneModel);
+CREATE INDEX IF NOT EXISTS idx_phonecameraprofile_active ON PhoneCameraProfile(isActive);
+CREATE INDEX IF NOT EXISTS idx_phonecameraprofile_dateadded ON PhoneCameraProfile(dateCalibrated);

@@ -1,0 +1,36 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/TipType.sq
+
+CREATE TABLE TipType (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    i8n TEXT NOT NULL DEFAULT 'en-US'
+);
+
+-- Indexes for performance
+CREATE INDEX idx_tiptype_name ON TipType(name);
+CREATE INDEX idx_tiptype_i8n ON TipType(i8n);
+
+-- Queries
+insertTipType:
+INSERT INTO TipType(name, i8n)
+VALUES (?, ?);
+
+selectTipTypeById:
+SELECT * FROM TipType WHERE id = ?;
+
+selectAllTipTypes:
+SELECT * FROM TipType ORDER BY name;
+
+selectTipTypesByLocalization:
+SELECT * FROM TipType WHERE i8n = ? ORDER BY name;
+
+updateTipType:
+UPDATE TipType 
+SET name = ?, i8n = ?
+WHERE id = ?;
+
+deleteTipType:
+DELETE FROM TipType WHERE id = ?;
+
+selectTipTypeCount:
+SELECT COUNT(*) FROM TipType;

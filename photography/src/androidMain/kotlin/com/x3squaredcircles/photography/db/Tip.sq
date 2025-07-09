@@ -1,0 +1,55 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/Tip.sq
+
+CREATE TABLE Tip (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    tipTypeId INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    fstop TEXT DEFAULT '',
+    shutterSpeed TEXT DEFAULT '',
+    iso TEXT DEFAULT '',
+    i8n TEXT NOT NULL DEFAULT 'en-US',
+    FOREIGN KEY (tipTypeId) REFERENCES TipType(id) ON DELETE CASCADE
+);
+
+-- Indexes for performance
+CREATE INDEX idx_tip_tiptype ON Tip(tipTypeId);
+CREATE INDEX idx_tip_i8n ON Tip(i8n);
+CREATE INDEX idx_tip_title ON Tip(title);
+
+-- Queries
+insertTip:
+INSERT INTO Tip(tipTypeId, title, content, fstop, shutterSpeed, iso, i8n)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectTipById:
+SELECT * FROM Tip WHERE id = ?;
+
+selectAllTips:
+SELECT * FROM Tip ORDER BY title;
+
+selectTipsByTypeId:
+SELECT * FROM Tip WHERE tipTypeId = ? ORDER BY title;
+
+selectTipsByLocalization:
+SELECT * FROM Tip WHERE i8n = ? ORDER BY title;
+
+selectTipsByTypeAndLocalization:
+SELECT * FROM Tip WHERE tipTypeId = ? AND i8n = ? ORDER BY title;
+
+updateTip:
+UPDATE Tip 
+SET tipTypeId = ?, title = ?, content = ?, fstop = ?, shutterSpeed = ?, iso = ?, i8n = ?
+WHERE id = ?;
+
+deleteTip:
+DELETE FROM Tip WHERE id = ?;
+
+deleteTipsByTypeId:
+DELETE FROM Tip WHERE tipTypeId = ?;
+
+selectTipCount:
+SELECT COUNT(*) FROM Tip;
+
+selectTipCountByType:
+SELECT COUNT(*) FROM Tip WHERE tipTypeId = ?;

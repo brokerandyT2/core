@@ -1,0 +1,54 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/PhoneCameraProfile.sq
+
+CREATE TABLE PhoneCameraProfile (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    phoneModel TEXT NOT NULL,
+    mainLensFocalLength REAL NOT NULL,
+    mainLensFOV REAL NOT NULL,
+    ultraWideFocalLength REAL,
+    telephotoFocalLength REAL,
+    dateCalibrated INTEGER NOT NULL,
+    isActive INTEGER AS Boolean NOT NULL DEFAULT 1
+);
+
+-- Indexes for performance
+CREATE INDEX idx_phonecameraprofile_model ON PhoneCameraProfile(phoneModel);
+CREATE INDEX idx_phonecameraprofile_active ON PhoneCameraProfile(isActive);
+CREATE INDEX idx_phonecameraprofile_dateadded ON PhoneCameraProfile(dateCalibrated);
+
+-- Queries
+insertPhoneCameraProfile:
+INSERT INTO PhoneCameraProfile(phoneModel, mainLensFocalLength, mainLensFOV, ultraWideFocalLength, telephotoFocalLength, dateCalibrated, isActive)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectPhoneCameraProfileById:
+SELECT * FROM PhoneCameraProfile WHERE id = ?;
+
+selectActivePhoneCameraProfile:
+SELECT * FROM PhoneCameraProfile WHERE isActive = 1 ORDER BY dateCalibrated DESC LIMIT 1;
+
+selectAllPhoneCameraProfiles:
+SELECT * FROM PhoneCameraProfile ORDER BY dateCalibrated DESC;
+
+selectPhoneCameraProfilesByModel:
+SELECT * FROM PhoneCameraProfile WHERE phoneModel LIKE '%' || ? || '%' ORDER BY dateCalibrated DESC;
+
+updatePhoneCameraProfile:
+UPDATE PhoneCameraProfile 
+SET phoneModel = ?, mainLensFocalLength = ?, mainLensFOV = ?, ultraWideFocalLength = ?, telephotoFocalLength = ?, dateCalibrated = ?, isActive = ?
+WHERE id = ?;
+
+setActiveProfile:
+UPDATE PhoneCameraProfile SET isActive = 1 WHERE id = ?;
+
+deactivateAllProfiles:
+UPDATE PhoneCameraProfile SET isActive = 0;
+
+deletePhoneCameraProfile:
+DELETE FROM PhoneCameraProfile WHERE id = ?;
+
+selectPhoneCameraProfileCount:
+SELECT COUNT(*) FROM PhoneCameraProfile;
+
+selectActivePhoneCameraProfileCount:
+SELECT COUNT(*) FROM PhoneCameraProfile WHERE isActive = 1;

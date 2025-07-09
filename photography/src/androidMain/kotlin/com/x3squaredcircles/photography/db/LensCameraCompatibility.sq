@@ -1,0 +1,55 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/LensCameraCompatibility.sq
+
+CREATE TABLE LensCameraCompatibility (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    lensId INTEGER NOT NULL,
+    cameraBodyId INTEGER NOT NULL,
+    dateAdded INTEGER NOT NULL,
+    FOREIGN KEY (lensId) REFERENCES Lens(id) ON DELETE CASCADE,
+    FOREIGN KEY (cameraBodyId) REFERENCES CameraBody(id) ON DELETE CASCADE,
+    UNIQUE(lensId, cameraBodyId)
+);
+
+-- Indexes for performance
+CREATE INDEX idx_compatibility_lens ON LensCameraCompatibility(lensId);
+CREATE INDEX idx_compatibility_camera ON LensCameraCompatibility(cameraBodyId);
+CREATE INDEX idx_compatibility_dateadded ON LensCameraCompatibility(dateAdded);
+
+-- Queries
+insertCompatibility:
+INSERT INTO LensCameraCompatibility(lensId, cameraBodyId, dateAdded)
+VALUES (?, ?, ?);
+
+insertOrIgnoreCompatibility:
+INSERT OR IGNORE INTO LensCameraCompatibility(lensId, cameraBodyId, dateAdded)
+VALUES (?, ?, ?);
+
+selectCompatibilityById:
+SELECT * FROM LensCameraCompatibility WHERE id = ?;
+
+selectCompatibilitiesByLensId:
+SELECT * FROM LensCameraCompatibility WHERE lensId = ? ORDER BY dateAdded;
+
+selectCompatibilitiesByCameraId:
+SELECT * FROM LensCameraCompatibility WHERE cameraBodyId = ? ORDER BY dateAdded;
+
+selectCompatibilityExists:
+SELECT COUNT(*) > 0 FROM LensCameraCompatibility WHERE lensId = ? AND cameraBodyId = ?;
+
+deleteCompatibility:
+DELETE FROM LensCameraCompatibility WHERE lensId = ? AND cameraBodyId = ?;
+
+deleteCompatibilityById:
+DELETE FROM LensCameraCompatibility WHERE id = ?;
+
+deleteCompatibilitiesByLensId:
+DELETE FROM LensCameraCompatibility WHERE lensId = ?;
+
+deleteCompatibilitiesByCameraId:
+DELETE FROM LensCameraCompatibility WHERE cameraBodyId = ?;
+
+selectAllCompatibilities:
+SELECT * FROM LensCameraCompatibility ORDER BY dateAdded DESC;
+
+selectCompatibilityCount:
+SELECT COUNT(*) FROM LensCameraCompatibility;

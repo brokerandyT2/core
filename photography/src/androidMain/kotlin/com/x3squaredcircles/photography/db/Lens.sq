@@ -1,0 +1,63 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/Lens.sq
+
+CREATE TABLE Lens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    minMM REAL NOT NULL,
+    maxMM REAL,
+    minFStop REAL,
+    maxFStop REAL,
+    isPrime INTEGER AS Boolean NOT NULL DEFAULT 0,
+    isUserCreated INTEGER AS Boolean NOT NULL DEFAULT 0,
+    dateAdded INTEGER NOT NULL,
+    nameForLens TEXT NOT NULL DEFAULT ''
+);
+
+-- Indexes for performance
+CREATE INDEX idx_lens_focal_length ON Lens(minMM, maxMM);
+CREATE INDEX idx_lens_aperture ON Lens(minFStop, maxFStop);
+CREATE INDEX idx_lens_usercreated ON Lens(isUserCreated);
+CREATE INDEX idx_lens_dateadded ON Lens(dateAdded);
+CREATE INDEX idx_lens_isprime ON Lens(isPrime);
+
+-- Queries
+insertLens:
+INSERT INTO Lens(minMM, maxMM, minFStop, maxFStop, isPrime, isUserCreated, dateAdded, nameForLens)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+selectLensById:
+SELECT * FROM Lens WHERE id = ?;
+
+selectAllLenses:
+SELECT * FROM Lens ORDER BY isUserCreated DESC, minMM;
+
+selectPagedLenses:
+SELECT * FROM Lens ORDER BY isUserCreated DESC, minMM LIMIT ? OFFSET ?;
+
+selectUserLenses:
+SELECT * FROM Lens WHERE isUserCreated = 1 ORDER BY minMM;
+
+searchLensesByFocalLength:
+SELECT * FROM Lens 
+WHERE (isPrime = 1 AND ABS(minMM - ?) <= 5.0) 
+   OR (isPrime = 0 AND ? >= minMM AND ? <= COALESCE(maxMM, minMM))
+ORDER BY isUserCreated DESC, minMM;
+
+selectCompatibleLenses:
+SELECT l.* FROM Lens l
+INNER JOIN LensCameraCompatibility lcc ON l.id = lcc.lensId
+WHERE lcc.cameraBodyId = ?
+ORDER BY l.isUserCreated DESC, l.minMM;
+
+updateLens:
+UPDATE Lens 
+SET minMM = ?, maxMM = ?, minFStop = ?, maxFStop = ?, isPrime = ?, nameForLens = ?
+WHERE id = ?;
+
+deleteLens:
+DELETE FROM Lens WHERE id = ?;
+
+selectLensCount:
+SELECT COUNT(*) FROM Lens;
+
+selectUserLensCount:
+SELECT COUNT(*) FROM Lens WHERE isUserCreated = 1;

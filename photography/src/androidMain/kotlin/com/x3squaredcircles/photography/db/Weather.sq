@@ -1,0 +1,45 @@
+-- photography/src/commonMain/sqldelight/com/x3squaredcircles/photography/db/Weather.sq
+
+CREATE TABLE Weather (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    locationId INTEGER NOT NULL,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    timezone TEXT NOT NULL,
+    timezoneOffset INTEGER NOT NULL,
+    lastUpdate INTEGER NOT NULL,
+    FOREIGN KEY (locationId) REFERENCES Location(id) ON DELETE CASCADE
+);
+
+-- Indexes for performance
+CREATE INDEX idx_weather_location ON Weather(locationId);
+CREATE INDEX idx_weather_coordinates ON Weather(latitude, longitude);
+CREATE INDEX idx_weather_lastUpdate ON Weather(lastUpdate);
+
+-- Queries
+insertWeather:
+INSERT INTO Weather(locationId, latitude, longitude, timezone, timezoneOffset, lastUpdate)
+VALUES (?, ?, ?, ?, ?, ?);
+
+selectWeatherById:
+SELECT * FROM Weather WHERE id = ?;
+
+selectWeatherByLocationId:
+SELECT * FROM Weather WHERE locationId = ?;
+
+selectRecentWeather:
+SELECT * FROM Weather ORDER BY lastUpdate DESC LIMIT ?;
+
+selectExpiredWeather:
+SELECT * FROM Weather WHERE lastUpdate < ?;
+
+updateWeather:
+UPDATE Weather 
+SET latitude = ?, longitude = ?, timezone = ?, timezoneOffset = ?, lastUpdate = ?
+WHERE id = ?;
+
+deleteWeather:
+DELETE FROM Weather WHERE id = ?;
+
+deleteWeatherByLocationId:
+DELETE FROM Weather WHERE locationId = ?;
