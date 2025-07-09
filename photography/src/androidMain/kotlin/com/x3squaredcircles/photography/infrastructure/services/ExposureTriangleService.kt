@@ -1,10 +1,12 @@
 // photography/src/commonMain/kotlin/com/x3squaredcircles/photography/infrastructure/services/ExposureTriangleService.kt
 package com.x3squaredcircles.photography.infrastructure.services
 import com.x3squaredcircles.core.infrastructure.services.ILoggingService
+
 import com.x3squaredcircles.photography.application.services.ShutterSpeeds
 import com.x3squaredcircles.photography.application.services.Apertures
 import com.x3squaredcircles.photography.application.services.ISOs
 import kotlin.math.*
+
 class ExposureTriangleService(
 private val loggingService: ILoggingService
 ) : IExposureTriangleService {
@@ -159,28 +161,28 @@ private fun parseIso(iso: String): Double {
 
 private fun getShutterSpeedScale(scale: Int): Array<String> {
     return when (scale) {
-        1 -> ShutterSpeeds.Full
-        2 -> ShutterSpeeds.Halves
-        3 -> ShutterSpeeds.Thirds
-        else -> ShutterSpeeds.Full
+        1 -> ShutterSpeeds.full
+        2 -> ShutterSpeeds.halves
+        3 -> ShutterSpeeds.thirds
+        else -> ShutterSpeeds.full
     }
 }
 
 private fun getApertureScale(scale: Int): Array<String> {
     return when (scale) {
-        1 -> Apertures.Full
-        2 -> Apertures.Halves
-        3 -> Apertures.Thirds
-        else -> Apertures.Full
+        1 -> Apertures.full
+        2 -> Apertures.halves
+        3 -> Apertures.thirds
+        else -> Apertures.full
     }
 }
 
 private fun getIsoScale(scale: Int): Array<String> {
     return when (scale) {
-        1 -> ISOs.Full
-        2 -> ISOs.Halves
-        3 -> ISOs.Thirds
-        else -> ISOs.Full
+        1 -> ISOs.full
+        2 -> ISOs.halves
+        3 -> ISOs.thirds
+        else -> ISOs.full
     }
 }
 
