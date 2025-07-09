@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven("https://jitpack.io")
     }
 }
 
@@ -17,12 +18,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+         maven("https://jitpack.io") 
     }
 }
 
 rootProject.name = "CoreApp"
 include(":app")
 include(":core")
+include(":photography") 
 
 // Enable Kotlin Multiplatform Gradle plugin
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+// /settings.gradle.kts

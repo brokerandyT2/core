@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version "1.9.20" // Add version number
+    kotlin("plugin.serialization")
 }
 
 kotlin {
@@ -61,6 +61,9 @@ kotlin {
 
                 // Android Compose Koin - version 3.5.0
                 implementation("io.insert-koin:koin-androidx-compose:3.5.0")
+
+                //CosineKitty Astronomy Engine
+                implementation("io.github.cosinekitty:astronomy:2.1.19")
             }
         }
 

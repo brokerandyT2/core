@@ -1,7 +1,7 @@
 // com/x3squaredcircles/photography/domain/services/ISunCalculatorService.kt
 package com.x3squaredcircles.photography.domain.services
 
-import kotlinx.datetime.LocalDateTime
+import 
 
 /**
  * Service for calculating sun, moon, and astronomical data using Astronomy Engine
@@ -14,127 +14,127 @@ interface ISunCalculatorService {
     /**
      * Gets the sunrise time for a specific date and location (returns UTC)
      */
-    fun getSunrise(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getSunrise(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the sunrise end time for a specific date and location (returns UTC)
      */
-    fun getSunriseEnd(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getSunriseEnd(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the sunset start time for a specific date and location (returns UTC)
      */
-    fun getSunsetStart(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getSunsetStart(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the sunset time for a specific date and location (returns UTC)
      */
-    fun getSunset(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getSunset(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the solar noon time for a specific date and location (returns UTC)
      */
-    fun getSolarNoon(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getSolarNoon(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the solar nadir time (opposite of solar noon) for a specific date and location (returns UTC)
      */
-    fun getNadir(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getNadir(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the civil dawn time for a specific date and location (returns UTC)
      */
-    fun getCivilDawn(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getCivilDawn(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the civil dusk time for a specific date and location (returns UTC)
      */
-    fun getCivilDusk(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getCivilDusk(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the nautical dawn time for a specific date and location (returns UTC)
      */
-    fun getNauticalDawn(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getNauticalDawn(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the nautical dusk time for a specific date and location (returns UTC)
      */
-    fun getNauticalDusk(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getNauticalDusk(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the astronomical dawn time for a specific date and location (returns UTC)
      */
-    fun getAstronomicalDawn(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getAstronomicalDawn(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the astronomical dusk time for a specific date and location (returns UTC)
      */
-    fun getAstronomicalDusk(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getAstronomicalDusk(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the golden hour start time (evening) for a specific date and location (returns UTC)
      */
-    fun getGoldenHourStart(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getGoldenHourStart(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the golden hour end time (morning) for a specific date and location (returns UTC)
      */
-    fun getGoldenHourEnd(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getGoldenHourEnd(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the blue hour start time (evening) for a specific date and location (returns UTC)
      */
-    fun getBlueHourStart(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getBlueHourStart(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the blue hour end time (morning) for a specific date and location (returns UTC)
      */
-    fun getBlueHourEnd(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime
+    fun getBlueHourEnd(date: Long, latitude: Double, longitude: Double, timezone: String): Long
     
     /**
      * Gets the solar azimuth (compass direction) for a specific date/time and location
      */
-    fun getSolarAzimuth(dateTime: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getSolarAzimuth(dateTime: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     /**
      * Gets the solar elevation (altitude above horizon) for a specific date/time and location
      */
-    fun getSolarElevation(dateTime: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getSolarElevation(dateTime: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     // === LUNAR DATA ===
     
     /**
      * Gets the moon rise time for a specific date and location (returns UTC)
      */
-    fun getMoonrise(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime?
+    fun getMoonrise(date: Long, latitude: Double, longitude: Double, timezone: String): Long?
     
     /**
      * Gets the moon set time for a specific date and location (returns UTC)
      */
-    fun getMoonset(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): LocalDateTime?
+    fun getMoonset(date: Long, latitude: Double, longitude: Double, timezone: String): Long?
     
     /**
      * Gets the moon phase for a specific date and location
      */
-    fun getMoonPhase(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getMoonPhase(date: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     /**
      * Gets the moon illumination percentage for a specific date and location
      */
-    fun getMoonIllumination(date: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getMoonIllumination(date: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     /**
      * Gets the moon azimuth (compass direction) for a specific date/time and location
      */
-    fun getMoonAzimuth(dateTime: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getMoonAzimuth(dateTime: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     /**
      * Gets the moon elevation (altitude above horizon) for a specific date/time and location
      */
-    fun getMoonElevation(dateTime: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Double
+    fun getMoonElevation(dateTime: Long, latitude: Double, longitude: Double, timezone: String): Double
     
     /**
      * Checks if the moon is above the horizon at a specific date/time and location
      */
-    fun isMoonUp(dateTime: LocalDateTime, latitude: Double, longitude: Double, timezone: String): Boolean
+    fun isMoonUp(dateTime: Long, latitude: Double, longitude: Double, timezone: String): Boolean
 }

@@ -4,8 +4,9 @@ plugins {
     id("com.android.library") version "8.7.3" apply false
     kotlin("android") version "1.9.24" apply false
     kotlin("multiplatform") version "1.9.24" apply false
+    kotlin("plugin.serialization") version "1.9.24" apply false
 }
 
 
-
+// root gradle file.
 //for checkin
