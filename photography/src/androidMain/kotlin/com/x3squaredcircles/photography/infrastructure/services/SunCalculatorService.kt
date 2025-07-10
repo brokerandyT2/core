@@ -1,4 +1,4 @@
-// com/x3squaredcircles/photography/infrastructure/services/SunCalculatorService.kt
+// photography/src/androidMain/kotlin/com/x3squaredcircles/photography/infrastructure/services/SunCalculatorService.kt
 package com.x3squaredcircles.photography.infrastructure.services
 
 import com.x3squaredcircles.photography.domain.services.ISunCalculatorService
@@ -28,48 +28,52 @@ class SunCalculatorService : ISunCalculatorService {
         }
     }
     
-    private fun timestampToAstroTime(timestamp: Long): AstroTime {
-        val julianDays = (timestamp / 86400000.0) + 2440587.5
-        return AstroTime.fromTerrestrialTime(julianDays)
+    private fun timestampToTime(timestamp: Long): Time {
+        // Convert Unix timestamp (milliseconds) to days since J2000.0 epoch
+        // J2000.0 epoch is noon on January 1, 2000 UTC = 946728000000L milliseconds
+        val j2000EpochMs = 946728000000L  // Noon on January 1, 2000 UTC in milliseconds
+        val daysSinceJ2000 = (timestamp - j2000EpochMs) / 86400000.0
+        return Time(daysSinceJ2000)
     }
     
-    private fun astroTimeToTimestamp(astroTime: AstroTime): Long {
-        val julianDays = astroTime.tt
-        return ((julianDays - 2440587.5) * 86400000.0).toLong()
+    private fun timeToTimestamp(time: Time): Long {
+        // Convert Time back to Unix timestamp
+        val j2000EpochMs = 946728000000L
+        return (time.ut * 86400000.0 + j2000EpochMs).toLong()
     }
     
     private fun createObserver(latitude: Double, longitude: Double, height: Double = 0.0): Observer {
         return Observer(latitude, longitude, height)
     }
     
-    private fun searchSunEvent(observer: Observer, startTime: AstroTime, direction: Direction): AstroTime? {
+    private fun searchSunEvent(observer: Observer, startTime: Time, direction: Direction): Time? {
         return try {
-            searchRiseSet(Body.Sun, observer, direction, startTime, 1.0)?.time
+            searchRiseSet(Body.Sun, observer, direction, startTime, 1.0)
         } catch (e: Exception) {
             null
         }
     }
     
-    private fun searchTwilight(observer: Observer, startTime: AstroTime, direction: Direction, altitude: Double): AstroTime? {
+    private fun searchTwilight(observer: Observer, startTime: Time, direction: Direction, altitude: Double): Time? {
         return try {
-            searchAltitude(Body.Sun, observer, direction, startTime, 1.0, altitude)?.time
+            searchAltitude(Body.Sun, observer, direction, startTime, 1.0, altitude)
         } catch (e: Exception) {
             null
         }
     }
     
-    override fun getSunrise(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
-        val cacheKey = "sunrise_${date / 86400000L}_${latitude}_${longitude}"
-        return runBlocking {
-            getCachedOrCalculate(cacheKey) {
-                val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
-                val sunriseTime = searchSunEvent(observer, startTime, Direction.Rise)
-                
-                sunriseTime?.let { astroTimeToTimestamp(it) } ?: date
-            }
+override fun getSunrise(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
+    val cacheKey = "sunrise_${date / 86400000L}_${latitude}_${longitude}"
+    return runBlocking {
+        getCachedOrCalculate(cacheKey) {
+            val observer = createObserver(latitude, longitude)
+            val startTime = timestampToTime(date)
+            val sunriseTime = searchSunEvent(observer, startTime, Direction.Rise)
+            
+            sunriseTime?.let { timeToTimestamp(it) } ?: date
         }
     }
+}
     
     override fun getSunriseEnd(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
         val sunrise = getSunrise(date, latitude, longitude, timezone)
@@ -86,10 +90,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val sunsetTime = searchSunEvent(observer, startTime, Direction.Set)
                 
-                sunsetTime?.let { astroTimeToTimestamp(it) } ?: date
+                sunsetTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -99,11 +103,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 
                 try {
                     val noonEvent = searchHourAngle(Body.Sun, observer, 0.0, startTime)
-                    noonEvent?.let { astroTimeToTimestamp(it) } ?: date
+                    noonEvent.let { timeToTimestamp(it.time) } : date
                 } catch (e: Exception) {
                     date
                 }
@@ -121,10 +125,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val civilDawnTime = searchTwilight(observer, startTime, Direction.Rise, -6.0)
                 
-                civilDawnTime?.let { astroTimeToTimestamp(it) } ?: date
+                civilDawnTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -134,10 +138,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val civilDuskTime = searchTwilight(observer, startTime, Direction.Set, -6.0)
                 
-                civilDuskTime?.let { astroTimeToTimestamp(it) } ?: date
+                civilDuskTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -147,10 +151,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val nauticalDawnTime = searchTwilight(observer, startTime, Direction.Rise, -12.0)
                 
-                nauticalDawnTime?.let { astroTimeToTimestamp(it) } ?: date
+                nauticalDawnTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -160,10 +164,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val nauticalDuskTime = searchTwilight(observer, startTime, Direction.Set, -12.0)
                 
-                nauticalDuskTime?.let { astroTimeToTimestamp(it) } ?: date
+                nauticalDuskTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -173,10 +177,10 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val astronomicalDawnTime = searchTwilight(observer, startTime, Direction.Rise, -18.0)
                 
-                astronomicalDawnTime?.let { astroTimeToTimestamp(it) } ?: date
+                astronomicalDawnTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
@@ -186,22 +190,22 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 val astronomicalDuskTime = searchTwilight(observer, startTime, Direction.Set, -18.0)
                 
-                astronomicalDuskTime?.let { astroTimeToTimestamp(it) } ?: date
+                astronomicalDuskTime?.let { timeToTimestamp(it) } ?: date
             }
         }
     }
     
     override fun getGoldenHourStart(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
         val sunset = getSunset(date, latitude, longitude, timezone)
-        return sunset - (60 * 60 * 1000L) // Subtract 1 hour
+        return sunset - (60 * 60 * 1000L) // 1 hour before sunset
     }
     
     override fun getGoldenHourEnd(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
         val sunrise = getSunrise(date, latitude, longitude, timezone)
-        return sunrise + (60 * 60 * 1000L) // Add 1 hour
+        return sunrise + (60 * 60 * 1000L) // 1 hour after sunrise
     }
     
     override fun getBlueHourStart(date: Long, latitude: Double, longitude: Double, timezone: String): Long {
@@ -217,10 +221,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val astroTime = timestampToAstroTime(dateTime)
+                val time = timestampToTime(dateTime)
                 
                 try {
-                    val horizontal = horizon(astroTime, observer, Body.Sun, Refraction.Normal)
+                    val equatorial = equator(Body.Sun, time, observer, EquatorEpoch.OfDate, Aberration.Corrected)
+                    val horizontal = horizon(time, observer, equatorial.ra, equatorial.dec, Refraction.Normal)
                     horizontal.azimuth
                 } catch (e: Exception) {
                     0.0
@@ -234,10 +239,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val astroTime = timestampToAstroTime(dateTime)
+                val time = timestampToTime(dateTime)
                 
                 try {
-                    val horizontal = horizon(astroTime, observer, Body.Sun, Refraction.Normal)
+                    val equatorial = equator(Body.Sun, time, observer, EquatorEpoch.OfDate, Aberration.Corrected)
+                    val horizontal = horizon(time, observer, equatorial.ra, equatorial.dec, Refraction.Normal)
                     horizontal.altitude
                 } catch (e: Exception) {
                     0.0
@@ -251,11 +257,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 
                 try {
-                    val moonriseTime = searchRiseSet(Body.Moon, observer, Direction.Rise, startTime, 1.0)?.time
-                    moonriseTime?.let { astroTimeToTimestamp(it) }
+                    val result = searchRiseSet(Body.Moon, observer, Direction.Rise, startTime, 1.0)
+                    result?.let { timeToTimestamp(it) }
                 } catch (e: Exception) {
                     null
                 }
@@ -268,11 +274,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val startTime = timestampToAstroTime(date)
+                val startTime = timestampToTime(date)
                 
                 try {
-                    val moonsetTime = searchRiseSet(Body.Moon, observer, Direction.Set, startTime, 1.0)?.time
-                    moonsetTime?.let { astroTimeToTimestamp(it) }
+                    val result = searchRiseSet(Body.Moon, observer, Direction.Set, startTime, 1.0)
+                    result?.let { timeToTimestamp(it) }
                 } catch (e: Exception) {
                     null
                 }
@@ -284,10 +290,10 @@ class SunCalculatorService : ISunCalculatorService {
         val cacheKey = "moonphase_${date / 86400000L}"
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
-                val astroTime = timestampToAstroTime(date)
+                val time = timestampToTime(date)
                 
                 try {
-                    moonPhase(astroTime)
+                    moonPhase(time)
                 } catch (e: Exception) {
                     0.0
                 }
@@ -299,10 +305,10 @@ class SunCalculatorService : ISunCalculatorService {
         val cacheKey = "moonillumination_${date / 86400000L}"
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
-                val astroTime = timestampToAstroTime(date)
+                val time = timestampToTime(date)
                 
                 try {
-                    val illumination = illumination(Body.Moon, astroTime)
+                    val illumination = illumination(Body.Moon, time)
                     illumination.phaseFraction
                 } catch (e: Exception) {
                     0.0
@@ -316,10 +322,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val astroTime = timestampToAstroTime(dateTime)
+                val time = timestampToTime(dateTime)
                 
                 try {
-                    val horizontal = horizon(astroTime, observer, Body.Moon, Refraction.Normal)
+                    val equatorial = equator(Body.Moon, time, observer, EquatorEpoch.OfDate, Aberration.Corrected)
+                    val horizontal = horizon(time, observer, equatorial.ra, equatorial.dec, Refraction.Normal)
                     horizontal.azimuth
                 } catch (e: Exception) {
                     0.0
@@ -333,10 +340,11 @@ class SunCalculatorService : ISunCalculatorService {
         return runBlocking {
             getCachedOrCalculate(cacheKey) {
                 val observer = createObserver(latitude, longitude)
-                val astroTime = timestampToAstroTime(dateTime)
+                val time = timestampToTime(dateTime)
                 
                 try {
-                    val horizontal = horizon(astroTime, observer, Body.Moon, Refraction.Normal)
+                    val equatorial = equator(Body.Moon, time, observer, EquatorEpoch.OfDate, Aberration.Corrected)
+                    val horizontal = horizon(time, observer, equatorial.ra, equatorial.dec, Refraction.Normal)
                     horizontal.altitude
                 } catch (e: Exception) {
                     0.0
