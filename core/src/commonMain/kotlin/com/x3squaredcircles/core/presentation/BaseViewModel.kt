@@ -86,14 +86,14 @@ abstract class BaseViewModel(
     }
     
     // Property setters with StateFlow updates
-    protected fun setIsBusy(value: Boolean) {
+    fun setIsBusy(value: Boolean) {
         if (_isBusy != value) {
             _isBusy = value
             _isBusyFlow.value = value
         }
     }
     
-    protected fun setIsError(value: Boolean) {
+    fun setIsError(value: Boolean) {
         if (_isError != value) {
             _isError = value
             _isErrorFlow.value = value
