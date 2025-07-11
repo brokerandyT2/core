@@ -39,7 +39,7 @@ class SunService(
 
             // Move sun calculations to background thread to prevent UI blocking
             val result = withContext(Dispatchers.Default) {
-                val localDateTime = dateTimeInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+
                 val timezone = TimeZone.currentSystemDefault().id
 
                 val azimuth = sunCalculatorService.getSolarAzimuth(dateTimeInstant.toEpochMilliseconds(), latitude, longitude, timezone)
@@ -90,19 +90,19 @@ class SunService(
                     date = localDate,
                     latitude = latitude,
                     longitude = longitude,
-                    sunrise = longToLocalDateTime(sunCalculatorService.getSunrise(date, latitude, longitude, timezone)),
-                    sunset = longToLocalDateTime(sunCalculatorService.getSunset(date, latitude, longitude, timezone)),
-                    solarNoon = longToLocalDateTime(sunCalculatorService.getSolarNoon(date, latitude, longitude, timezone)),
-                    astronomicalDawn = longToLocalDateTime(sunCalculatorService.getAstronomicalDawn(date, latitude, longitude, timezone)),
-                    astronomicalDusk = longToLocalDateTime(sunCalculatorService.getAstronomicalDusk(date, latitude, longitude, timezone)),
-                    nauticalDawn = longToLocalDateTime(sunCalculatorService.getNauticalDawn(date, latitude, longitude, timezone)),
-                    nauticalDusk = longToLocalDateTime(sunCalculatorService.getNauticalDusk(date, latitude, longitude, timezone)),
-                    civilDawn = longToLocalDateTime(sunCalculatorService.getCivilDawn(date, latitude, longitude, timezone)),
-                    civilDusk = longToLocalDateTime(sunCalculatorService.getCivilDusk(date, latitude, longitude, timezone)),
-                    goldenHourMorningStart = longToLocalDateTime(sunCalculatorService.getGoldenHourStart(date, latitude, longitude, timezone)),
-                    goldenHourMorningEnd = longToLocalDateTime(sunCalculatorService.getGoldenHourEnd(date, latitude, longitude, timezone)),
-                    goldenHourEveningStart = longToLocalDateTime(sunCalculatorService.getGoldenHourStart(date, latitude, longitude, timezone)), // Using same method for evening
-                    goldenHourEveningEnd = longToLocalDateTime(sunCalculatorService.getGoldenHourEnd(date, latitude, longitude, timezone)) // Using same method for evening
+                    sunrise = sunCalculatorService.getSunrise(date, latitude, longitude, timezone),
+                    sunset = sunCalculatorService.getSunset(date, latitude, longitude, timezone),
+                    solarNoon = sunCalculatorService.getSolarNoon(date, latitude, longitude, timezone),
+                    astronomicalDawn = sunCalculatorService.getAstronomicalDawn(date, latitude, longitude, timezone),
+                    astronomicalDusk = sunCalculatorService.getAstronomicalDusk(date, latitude, longitude, timezone),
+                    nauticalDawn = sunCalculatorService.getNauticalDawn(date, latitude, longitude, timezone),
+                    nauticalDusk = sunCalculatorService.getNauticalDusk(date, latitude, longitude, timezone),
+                    civilDawn = sunCalculatorService.getCivilDawn(date, latitude, longitude, timezone),
+                    civilDusk = sunCalculatorService.getCivilDusk(date, latitude, longitude, timezone),
+                    goldenHourMorningStart = sunCalculatorService.getGoldenHourStart(date, latitude, longitude, timezone),
+                    goldenHourMorningEnd = sunCalculatorService.getGoldenHourEnd(date, latitude, longitude, timezone),
+                    goldenHourEveningStart = sunCalculatorService.getGoldenHourStart(date, latitude, longitude, timezone), // Using same method for evening
+                    goldenHourEveningEnd = sunCalculatorService.getGoldenHourEnd(date, latitude, longitude, timezone) // Using same method for evening
                 )
             }
 
