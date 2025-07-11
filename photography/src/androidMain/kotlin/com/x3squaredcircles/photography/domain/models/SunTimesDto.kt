@@ -5,20 +5,20 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 
 data class SunTimesDto(
-    val date: LocalDate,
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
-    val sunrise: LocalDateTime,
-    val sunset: LocalDateTime,
-    val solarNoon: LocalDateTime,
-    val astronomicalDawn: LocalDateTime,
-    val astronomicalDusk: LocalDateTime,
-    val nauticalDawn: LocalDateTime,
-    val nauticalDusk: LocalDateTime,
-    val civilDawn: LocalDateTime,
-    val civilDusk: LocalDateTime,
-    val goldenHourMorningStart: LocalDateTime,
-    val goldenHourMorningEnd: LocalDateTime,
-    val goldenHourEveningStart: LocalDateTime,
-    val goldenHourEveningEnd: LocalDateTime
+    var date: LocalDate,
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
+    var sunrise: LocalDateTime,
+    var sunset: LocalDateTime,
+    var solarNoon: LocalDateTime,
+    var astronomicalDawn: LocalDateTime,
+    var astronomicalDusk: LocalDateTime,
+    var nauticalDawn: LocalDateTime,
+    var nauticalDusk: LocalDateTime,
+    var civilDawn: LocalDateTime,
+    var civilDusk: LocalDateTime,
+    var goldenHourMorningStart: LocalDateTime,
+    var goldenHourMorningEnd: LocalDateTime,
+    var goldenHourEveningStart: LocalDateTime,
+    var goldenHourEveningEnd: LocalDateTime
 )
