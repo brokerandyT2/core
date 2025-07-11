@@ -89,7 +89,8 @@ enum class SubscriptionStatus(val value: Int) {
     Expired(2),
     Cancelled(3),
     Pending(4),
-    Failed(5);
+    Failed(5),
+    Unknown(6);
 
     companion object {
         fun fromValue(value: Int): SubscriptionStatus {

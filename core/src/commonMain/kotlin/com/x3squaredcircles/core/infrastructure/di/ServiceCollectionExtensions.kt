@@ -1,6 +1,6 @@
 // core/src/commonMain/kotlin/com/x3squaredcircles/core/infrastructure/di/CoreModule.kt
 package com.x3squaredcircles.core.infrastructure.di
-
+import com.x3squaredcircles.core.infrastructure.services.*
 import com.x3squaredcircles.core.infrastructure.events.IEventBus
 import com.x3squaredcircles.core.infrastructure.events.InMemoryEventBus
 import com.x3squaredcircles.core.mediator.IMediator
@@ -37,12 +37,13 @@ object CoreModule {
         // Core Event Bus Infrastructure  
         // Equivalent to: services.AddSingleton<IEventBus, InMemoryEventBus>()
         single<IEventBus> { InMemoryEventBus() }
-        
+        single<ILoggingService> { LoggingService() }
         // Core Error Display Service
         // Equivalent to: services.AddSingleton<IErrorDisplayService, ErrorDisplayService>()
         single<IErrorDisplayService> { ErrorDisplayService() }
         
         // NOTE: Business logic components (handlers, validators, repositories) 
         // are NOT registered here - they belong in the app module
+        
     }
 }
