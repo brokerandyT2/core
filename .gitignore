@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/build/*
+.idea
+core/build/*

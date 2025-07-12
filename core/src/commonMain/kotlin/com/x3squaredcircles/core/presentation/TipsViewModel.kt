@@ -40,14 +40,14 @@ suspend fun loadTipTypesAsync() {
 
         when (result) {
             is Result.Success -> {
-                val tipTypeViewModels = result.data.map { item: TipTypeDto ->
+                val tipTypeViewModels = result.data?.map { item: TipTypeDto ->
                     TipTypeItemViewModel(
                         id = item.id,
                         name = item.name,
                         i8n = item.i8n
                     )
                 }
-                _tipTypes.value = tipTypeViewModels
+                _tipTypes.value = tipTypeViewModels!!
 
                 if (tipTypeViewModels.isNotEmpty()) {
                     val firstTipType = tipTypeViewModels.first()
@@ -84,7 +84,7 @@ suspend fun loadTipsByTypeAsync(tipTypeId: Int) {
 
         when (result) {
             is Result.Success -> {
-                val tipViewModels = result.data.map { item: TipDto ->
+                val tipViewModels = result.data?.map { item: TipDto ->
                     TipItemViewModel(
                         id = item.id,
                         tipTypeId = item.tipTypeId,
@@ -96,7 +96,7 @@ suspend fun loadTipsByTypeAsync(tipTypeId: Int) {
                         i8n = item.i8n
                     )
                 }
-                _tips.value = tipViewModels
+                _tips.value = tipViewModels!!
             }
             is Result.Failure -> {
                 onSystemError(result.errorMessage)

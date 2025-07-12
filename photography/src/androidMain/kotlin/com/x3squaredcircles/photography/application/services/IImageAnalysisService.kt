@@ -61,36 +61,3 @@ interface IImageAnalysisService {
     ): ClippingInfo
 }
 
-/**
- * Image metadata information
- */
-data class ImageMetadata(
-    val width: Int,
-    val height: Int,
-    val aperture: String?,
-    val shutterSpeed: String?,
-    val iso: Int?,
-    val focalLength: String?,
-    val camera: String?,
-    val lens: String?,
-    val timestamp: Long?
-)
-
-/**
- * White balance information
- */
-data class WhiteBalanceInfo(
-    val colorTemperature: Double,
-    val tint: Double,
-    val confidence: Double
-)
-
-/**
- * Clipping detection information
- */
-data class ClippingInfo(
-    val hasHighlightClipping: Boolean,
-    val hasShadowClipping: Boolean,
-    val highlightClippingPercentage: Double,
-    val shadowClippingPercentage: Double
-)

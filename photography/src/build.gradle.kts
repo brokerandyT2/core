@@ -28,6 +28,7 @@ kotlin {
             implementation("androidx.exifinterface:exifinterface:1.3.6")
             // Astronomy Engine for sun/moon calculations
             implementation("io.github.cosinekitty:astronomy:2.1.19")
+            implementation("com.soywiz.korlibs.korim:korim:4.0.10")
         }
         
         androidMain.dependencies {

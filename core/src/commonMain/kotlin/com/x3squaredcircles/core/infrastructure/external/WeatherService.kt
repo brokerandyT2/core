@@ -37,15 +37,15 @@ class WeatherService(
             when (weatherResult) {
                 is Result.Success -> {
                     val apiData = weatherResult.data
-                    val currentForecast = apiData.dailyForecasts.firstOrNull()
+                    val currentForecast = apiData?.dailyForecasts?.firstOrNull()
                     
                     val weatherDto = WeatherDataDto(
                         id = 0,
                         locationId = 0,
                         latitude = latitude,
                         longitude = longitude,
-                        timezone = apiData.timezone,
-                        timezoneOffset = apiData.timezoneOffset,
+                        timezone = apiData?.timezone!!,
+                        timezoneOffset = apiData?.timezoneOffset!!,
                         lastUpdate = System.currentTimeMillis(),
                         temperature = currentForecast?.temperature ?: 0.0,
                         description = currentForecast?.description ?: "",
@@ -98,9 +98,9 @@ class WeatherService(
                     val forecastDto = WeatherForecastDto(
                         weatherId = 0,
                         lastUpdate = System.currentTimeMillis(),
-                        timezone = apiData.timezone,
-                        timezoneOffset = apiData.timezoneOffset,
-                        dailyForecasts = apiData.dailyForecasts.take(days)
+                        timezone = apiData?.timezone!!,
+                        timezoneOffset = apiData?.timezoneOffset!!,
+                        dailyForecasts = apiData?.dailyForecasts!!.take(days)
                     )
                     Result.success(forecastDto)
                 }

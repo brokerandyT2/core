@@ -52,7 +52,7 @@ suspend fun loadWeatherAsync(locationId: Int) {
                 val weatherData = weatherResult.data
 
                 val forecastQuery = GetWeatherForecastQuery(
-                    latitude = weatherData.latitude,
+                    latitude = weatherData?.latitude!!,
                     longitude = weatherData.longitude,
                     days = 5
                 )
@@ -62,7 +62,7 @@ suspend fun loadWeatherAsync(locationId: Int) {
                 when (forecastResult) {
                     is Result.Success -> {
                         _weatherForecast.value = forecastResult.data
-                        processForecastDataOptimized(forecastResult.data)
+                        processForecastDataOptimized(forecastResult?.data!!)
                     }
                     is Result.Failure -> {
                         onSystemError(forecastResult.errorMessage)

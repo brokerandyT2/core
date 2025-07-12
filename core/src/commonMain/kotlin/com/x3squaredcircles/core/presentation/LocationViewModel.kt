@@ -83,7 +83,7 @@ suspend fun saveAsync() {
         when (result) {
             is Result.Success -> {
                 val locationDto = result.data 
-                _id.value = locationDto.id
+                _id.value = locationDto?.id!!
                 _timestamp.value = locationDto.timestamp
                 _isNewLocation.value = false
             }
