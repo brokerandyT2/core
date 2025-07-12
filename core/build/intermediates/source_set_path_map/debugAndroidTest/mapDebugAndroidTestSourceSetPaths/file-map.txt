@@ -1,9 +1,0 @@
-com.x3squaredcircles.core.test.core-lifecycle-runtime-2.3.1-0 C:\Users\broke\.gradle\caches\8.9\transforms\93f315569fd4dbd736691831ad9f8343\transformed\lifecycle-runtime-2.3.1\res
-com.x3squaredcircles.core.test.core-annotation-experimental-1.3.0-1 C:\Users\broke\.gradle\caches\8.9\transforms\9ed822e11a3a6c7419cd10360f894662\transformed\annotation-experimental-1.3.0\res
-com.x3squaredcircles.core.test.core-core-ktx-1.12.0-2 C:\Users\broke\.gradle\caches\8.9\transforms\c8570cb2e10a564e466c9ae83a475fef\transformed\core-ktx-1.12.0\res
-com.x3squaredcircles.core.test.core-core-1.12.0-3 C:\Users\broke\.gradle\caches\8.9\transforms\c859d9f72843645c536c7bdf65fd5b0c\transformed\core-1.12.0\res
-com.x3squaredcircles.core.test.core-androidTest-4 C:\Users\broke\AndroidStudioProjects\core\core\build\generated\res\resValues\androidTest\debug
-com.x3squaredcircles.core.test.core-mergeDebugAndroidTestResources-5 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.x3squaredcircles.core.test.core-mergeDebugAndroidTestResources-6 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.x3squaredcircles.core.test.core-debugAndroidTest-7 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
-com.x3squaredcircles.core.test.core-debug-8 C:\Users\broke\AndroidStudioProjects\core\core\build\intermediates\packaged_res\debug\packageDebugResources
